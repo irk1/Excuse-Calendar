@@ -1,6 +1,8 @@
 import PySimpleGUI as sg
 import time
 import keyboard
+#from pynput.keyboard import Key
+#from pynput import keyboard
 #on startup read memory file to find which line was left off at +1 to the number and set internal variable LineNum to it and read the excuse on the line equal to LineNum
 #open data file
 def CountLines():
@@ -53,9 +55,27 @@ layout = [  [sg.Text(text = calander(), key = "textBox")],
             [sg.Button('Next'), sg.Button('Exit'), sg.Button('Add Excuse(WIP)')] ]
 #GUI()
 
-window = sg.Window('Excuse Calender', layout)
+window = sg.Window('Excuse Calender', layout, return_keyboard_events = True)
+#def on_press(key):
+#    try:
+#        print('alphanumeric key {0} pressed'.format(
+#            key.char))
+#    except AttributeError:
+#        print('special key {0} pressed'.format(
+#            key))
+#def on_release(key):
+#    print('{0} released'.format(
+#        key))
+#    if key == keyboard.Key.esc:
+        # Stop listener
+#        return False
 
-
+# Collect events until released
+#with keyboard.Listener(
+#        on_press=on_press,
+#        on_release=on_release) as listener:
+#    listener.join()
+#
 while True:
     event, values = window.read()
     if event == sg.WIN_CLOSED or event == 'Exit': # if user closes window or clicks cancel
@@ -74,9 +94,14 @@ while True:
         #file.seek(0,2)
         file.write(NewExcuse+'\n')
         file.close()
-
+    if keyboard.read_key() == "q":
+        break
     #if input() == "exit":
     #    print("a")
+    #if key == Key.delete:
+    #    print("You pressed 'Delete'.")
+            #window.close()
+    #    break
     #if keyboard.read_key() == "q":
     #    break
     #time.sleep(1)
