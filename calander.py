@@ -4,7 +4,7 @@ import keyboard
 #on startup read memory file to find which line was left off at +1 to the number and set internal variable LineNum to it and read the excuse on the line equal to LineNum
 #open data file
 def CountLines():
-    with open(r"TestText.txt", "r") as file:
+    with open(r"excusesList.txt", "r") as file:
         for LineCount, line in enumerate(file):
             pass
     return LineCount
@@ -33,7 +33,8 @@ def calander():
         FullData = file.readlines()
         file.close()
 
-        print(LineCount)
+        print("LineCount= " + str(LineCount))
+        print("RollOverNumber= "+str(RollOverNumber))
         #print("LineNumA= " + LineNumA)
         #print("LineNum= " + str(LineNum))
         #print("LineNumB= " + str(LineNumB))
@@ -60,14 +61,14 @@ while True:
     if event == sg.WIN_CLOSED or event == 'Exit': # if user closes window or clicks cancel
         break
     if event == 'Next': #makes the next button go brrrrrr
-        #print("next")
+        print("next")
         window["textBox"].update(calander())
         window.refresh()
     if event == 'Add Excuse(WIP)':
         file = open("excusesList.txt")
         FullData = file.readlines()
         file.close()
-        file = open("TestText.txt", "a")
+        file = open("excusesList.txt", "a")
         #print('Please Type Your New Excuse In The EXACT FORMAT You Wish For It To Be Added')
         NewExcuse = input('Please Type Your New Excuse In The EXACT FORMAT You Wish For It To Be Added ')
         #file.seek(0,2)
