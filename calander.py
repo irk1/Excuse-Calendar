@@ -52,7 +52,7 @@ Data = calander()
 #def GUI():
 layout = [  [sg.Text(text = calander(), key = "textBox")],
             #[sg.Text('Enter something on Row 2'), sg.InputText()],
-            [sg.Button('Next'), sg.Button('Exit'), sg.Button('Add Excuse(WIP)')] ]
+            [sg.Button('Next'), sg.Button('Exit'), sg.Button('Add Excuse')] ]
 #GUI()
 
 window = sg.Window('Excuse Calender', layout, return_keyboard_events = True)
@@ -84,7 +84,7 @@ while True:
         print("next")
         window["textBox"].update(calander())
         window.refresh()
-    if event == 'Add Excuse(WIP)':
+    if event == 'Add Excuse':
         file = open("excusesList.txt")
         FullData = file.readlines()
         file.close()
