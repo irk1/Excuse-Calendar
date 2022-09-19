@@ -1,100 +1,61 @@
 import PySimpleGUI as sg
 import time
 import keyboard
-#from pynput.keyboard import Key
-#from pynput import keyboard
-#on startup read memory file to find which line was left off at +1 to the number and set internal variable LineNum to it and read the excuse on the line equal to LineNum
-#open data file
-def CountLines():
+
+def CountLines(): #count the number of lines in the excuse list
     with open(r"excusesList.txt", "r") as file:
         for LineCount, line in enumerate(file):
             pass
     return LineCount
 LineCount = CountLines()
 RollOverNumber = LineCount + 1
-def calander():
-        file = open("calanderMemory.txt", 'r')
-#read memory as string
-        LineNumA = file.readline()
-#convert string to integer
+def calander(): #the stuff that go BRRRRRRRR
+        file = open("calanderMemory.txt", 'r') #open the memory to find the line that was left off at previously
+        LineNumA = file.readline() #read the thingymabob as a string
+        LineNum = int(LineNumA) #make string an integer through voodoo
+        LineNumB = LineNum + 1 #add 1 so that there are no repeats and it properly counts
+        LineNumNew = str(LineNumB) #turn it back into a string by sacrificing a goat
+        file.close() #close the memory file
+        if (int(LineNumNew) >= RollOverNumber): #make sure the program doesnt count too high
+            LineNumNew = "0" #if it has counted too high smack it down to 0
+            print("rolled over") #testing shit to make sure it still works
+        file= open("calanderMemory.txt", 'w') #open the memory so that it can be brainwashed
+        file.writelines(LineNumNew) #overwrite with commpletly new data
+        file.close() #close the file
+        file = open("excusesList.txt") #open the excuses repository
+        Data = file.readlines() #yoink them into a variable
+        FullData = file.readlines() #i dont remember what this does
+        file.close() #close the file before the user can break it
 
-        LineNum = int(LineNumA)
-        LineNumB = LineNum + 1
-        LineNumNew = str(LineNumB)
-        file.close()
-        if (int(LineNumNew) >= RollOverNumber):
-            LineNumNew = "0"
-            print("rolled over")
 
-
-        file= open("calanderMemory.txt", 'w')
-        file.writelines(LineNumNew)
-        file.close()
-        file = open("excusesList.txt")
-        Data = file.readlines()
-        FullData = file.readlines()
-        file.close()
-
-        print("LineCount= " + str(LineCount))
-        print("RollOverNumber= "+str(RollOverNumber))
-        #print("LineNumA= " + LineNumA)
-        #print("LineNum= " + str(LineNum))
-        #print("LineNumB= " + str(LineNumB))
-        #print("LineNumNew= " + LineNumNew)
-        #print(Data[LineNum])
         return Data[LineNum]
         return LineNum
         return FullData
         return LineCount
-#print(Data[0])
-Data = calander()
+Data = calander() #tell program that this should have a value
 
-#def GUI():
-layout = [  [sg.Text(text = calander(), key = "textBox")],
+layout = [  [sg.Text(text = calander(), key = "textBox")],    #make fancy bits look fancy
             #[sg.Text('Enter something on Row 2'), sg.InputText()],
             [sg.Button('Next'), sg.Button('Exit'), sg.Button('Add Excuse')] ]
-#GUI()
+window = sg.Window('Excuse Calender', layout, return_keyboard_events = True) #rename fancy bits and poof them into existance
 
-window = sg.Window('Excuse Calender', layout, return_keyboard_events = True)
-#def on_press(key):
-#    try:
-#        print('alphanumeric key {0} pressed'.format(
-#            key.char))
-#    except AttributeError:
-#        print('special key {0} pressed'.format(
-#            key))
-#def on_release(key):
-#    print('{0} released'.format(
-#        key))
-#    if key == keyboard.Key.esc:
-        # Stop listener
-#        return False
-
-# Collect events until released
-#with keyboard.Listener(
-#        on_press=on_press,
-#        on_release=on_release) as listener:
-#    listener.join()
-#
-while True:
-    event, values = window.read()
-    if event == sg.WIN_CLOSED or event == 'Exit': # if user closes window or clicks cancel
-        break
+while True: #checks if while is spelled properly
+    event, values = window.read() #finds out who is touching shit
+    if event == sg.WIN_CLOSED or event == 'Exit': #cuts power to program
+        break #declares coffee break
     if event == 'Next': #makes the next button go brrrrrr
-        print("next")
-        window["textBox"].update(calander())
-        window.refresh()
-    if event == 'Add Excuse':
-        file = open("excusesList.txt")
-        FullData = file.readlines()
-        file.close()
-        file = open("excusesList.txt", "a")
-        #print('Please Type Your New Excuse In The EXACT FORMAT You Wish For It To Be Added')
-        NewExcuse = input('Please Type Your New Excuse In The EXACT FORMAT You Wish For It To Be Added ')
-        #file.seek(0,2)
-        file.write(NewExcuse+'\n')
-        file.close()
-    if keyboard.read_key() == "q":
+        #print("next") #tells izzy if he is crazy or if its working
+        window["textBox"].update(calander()) #trys to update text box
+        window.refresh() #trys to update text box
+    if event == 'Add Excuse': #lets user add more communist era propaganda to the dumpster fire
+        file = open("excusesList.txt") #opens the excuses
+        FullData = file.readlines() #illegally downloads all current excuses
+        file.close() #im not explaining this see line 28
+        file = open("excusesList.txt", "a") #grants admin permissions to the machine
+        NewExcuse = input('Please Type Your New Excuse In The EXACT FORMAT You Wish For It To Be Added ') #screams at user
+        file.write(NewExcuse+'\n') #rewrites sanitized excuses to file
+        file.close() # see line 54
+    if keyboard.read_key() == "q": #stops izzy from breaking his cmd terminal
         break
     #if input() == "exit":
     #    print("a")
